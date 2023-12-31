@@ -16,6 +16,8 @@ import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpSession;
 
+import static com.hmdp.utils.SystemConstants.USER_NICK_NAME_PREFIX;
+
 /**
  * <p>
  * 服务实现类
@@ -81,7 +83,7 @@ public class UserServiceOverSessionImpl extends ServiceImpl<UserMapper, User> im
     private User createUser(String phone) {
         User user = new User();
         user.setPhone(phone);
-        user.setNickName("user_" + RandomUtil.randomNumbers(10));
+        user.setNickName(USER_NICK_NAME_PREFIX + RandomUtil.randomNumbers(10));
         save(user);
         return user;
     }

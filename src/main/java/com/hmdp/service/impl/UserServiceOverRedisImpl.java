@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static com.hmdp.utils.RedisConstants.*;
+import static com.hmdp.utils.SystemConstants.USER_NICK_NAME_PREFIX;
 
 @Slf4j
 @Service
@@ -105,7 +106,7 @@ public class UserServiceOverRedisImpl extends ServiceImpl<UserMapper, User> impl
     private User createUser(String phone) {
         User user = new User();
         user.setPhone(phone);
-        user.setNickName("user_" + RandomUtil.randomNumbers(10));
+        user.setNickName(USER_NICK_NAME_PREFIX + RandomUtil.randomNumbers(10));
         save(user);
         return user;
     }
