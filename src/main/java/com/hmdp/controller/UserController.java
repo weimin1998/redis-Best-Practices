@@ -82,4 +82,9 @@ public class UserController {
         // 返回
         return Result.ok(info);
     }
+
+    @PostMapping
+    public Result sign(){
+        return userService.sign();
+    }
 }

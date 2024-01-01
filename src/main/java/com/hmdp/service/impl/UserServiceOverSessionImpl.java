@@ -99,4 +99,9 @@ public class UserServiceOverSessionImpl extends ServiceImpl<UserMapper, User> im
     public Result login(LoginFormDTO loginForm) {
         return null;
     }
+
+    @Override
+    public Result sign() {
+        return null;
+    }
 }

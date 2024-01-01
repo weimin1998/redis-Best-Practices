@@ -12,6 +12,7 @@ import com.hmdp.entity.User;
 import com.hmdp.mapper.UserMapper;
 import com.hmdp.service.IUserService;
 import com.hmdp.utils.RegexUtils;
+import com.hmdp.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,8 @@ import org.springframework.util.ObjectUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -101,6 +104,25 @@ public class UserServiceOverRedisImpl extends ServiceImpl<UserMapper, User> impl
 
         // 5.将token返回给前端
         return Result.ok(token);
+    }
+
+    @Override
+    public Result sign() {
+        // 1.获取当前用户
+        Long userId = UserHolder.getUser().getId();
+
+        // 2.获取当前日期
+        LocalDateTime now = LocalDateTime.now();
+
+        // 3.key
+        String key = USER_SIGN_KEY + userId + now.format(DateTimeFormatter.ofPattern(":yyyyMM"));
+
+        // 4.今天是本月的第几天
+        int dayOfMonth = now.getDayOfMonth();
+
+        // 5.写入redis
+        stringRedisTemplate.opsForValue().setBit(key, dayOfMonth - 1, true);
+        return Result.ok();
     }
 
     private User createUser(String phone) {
