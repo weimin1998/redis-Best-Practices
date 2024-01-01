@@ -104,4 +104,9 @@ public class UserServiceOverSessionImpl extends ServiceImpl<UserMapper, User> im
     public Result sign() {
         return null;
     }
+
+    @Override
+    public Result signCount() {
+        return null;
+    }
 }
